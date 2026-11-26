@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { MemoryRouter } from "react-router-dom";
 import expenseReducer from "../features/expenses/expenseSlice";
 import AddExpense from "./AddExpense";
-
+import "@testing-library/jest-dom/vitest";
 function renderForm() {
   const store = configureStore({
     reducer: {
