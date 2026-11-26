@@ -1,7 +1,7 @@
 
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AppData, Expense } from "../../types";
-import sampleData from "../../data/sample-data.json";
+import sampleData from "../../data/sample-data";
 
 const initialState: AppData = sampleData;
 
