@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { deleteExpense } from "./features/expenses/expenseSlice";
 import { calculateBalances, formatINR } from "./utils/money";
 import "./App.css";
-import { BrowserRouter, Routes, Route, NavLink, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route,Link, NavLink, useLocation } from "react-router-dom";
 import AddExpense from "./pages/AddExpense";
 
 
 function ExpensesPage() {
   const dispatch = useAppDispatch();
 const location = useLocation();
-const successMessage = location.state?.message as string | undefined;
+const successMessage = location.state?.message === "string"
+    ? location.state.message
+    : undefined;
   const members = useAppSelector((state) => state.expenses.members);
   const expenses = useAppSelector((state) => state.expenses.expenses);
 
