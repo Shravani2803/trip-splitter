@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { deleteExpense } from "./features/expenses/expenseSlice";
 import { calculateBalances, formatINR } from "./utils/money";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink, useLocation } from "react-router-dom";
 import AddExpense from "./pages/AddExpense";
+
 
 function ExpensesPage() {
   const dispatch = useAppDispatch();
@@ -50,13 +51,21 @@ const successMessage = location.state?.message as string | undefined;
 
   return (
     <div className="app">
-      <nav className="navbar">
-  <h2>Trip Splitter</h2>
-  <div>
-    <Link to="/">Expenses</Link>
-    {" | "}
-    <Link to="/expenses/new">Add Expense</Link>
-  </div>
+      <nav className="nav-buttons">
+  <NavLink
+    to="/"
+    end
+    className={({ isActive }) => isActive ? "nav-button active" : "nav-button"}
+  >
+    Expenses
+  </NavLink>
+
+  <NavLink
+    to="/expenses/new"
+    className={({ isActive }) => isActive ? "nav-button active" : "nav-button"}
+  >
+    Add Expense
+  </NavLink>
 </nav>
 
       <main className="container">
