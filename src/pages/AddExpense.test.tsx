@@ -13,13 +13,15 @@ function renderForm() {
     },
   });
 
-  return render(
+  const view = render(
     <Provider store={store}>
       <MemoryRouter>
         <AddExpense />
       </MemoryRouter>
     </Provider>
   );
+
+  return { ...view, store };
 }
 
 describe("AddExpense form", () => {
@@ -38,4 +40,37 @@ describe("AddExpense form", () => {
     expect(screen.getByLabelText(/amount/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/paid by/i)).toBeInTheDocument();
   });
+  it("saves a valid expense successfully", () => {
+  const { store } = renderForm();
+
+  fireEvent.change(screen.getByLabelText(/description/i), {
+    target: { value: "Lunch with friends" },
+  });
+
+  fireEvent.change(screen.getByLabelText(/amount/i), {
+    target: { value: "500" },
+  });
+
+  fireEvent.change(screen.getByLabelText(/paid by/i), {
+    target: { value: "m1" },
+  });
+
+  fireEvent.change(screen.getByLabelText(/date/i), {
+    target: { value: "2026-03-12" },
+  });
+
+  fireEvent.change(screen.getByLabelText(/category/i), {
+    target: { value: "Food" },
+  });
+
+  fireEvent.click(screen.getByLabelText(/Aarav/i));
+
+  fireEvent.click(screen.getByRole("button", { name: /save expense/i }));
+
+  expect(
+    store.getState().expenses.expenses.some(
+      (expense) => expense.description === "Lunch with friends"
+    )
+  ).toBe(true);
+});
 });
